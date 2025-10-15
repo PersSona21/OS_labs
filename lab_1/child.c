@@ -31,7 +31,7 @@ int main(int argc, char **argv) {
 	}
 	buf[bytes] = '\0';
 
-	// Разбираем строку на числа и считаем сумму
+	// парсим строку
 	float sum = 0.0;
 	char *p = buf;
 	while (*p) {
