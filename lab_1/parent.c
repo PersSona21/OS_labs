@@ -2,6 +2,7 @@
 #include <stdbool.h>
 
 #include <unistd.h>
+#include <mach-o/dyld.h>
 #include <sys/wait.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -19,14 +20,16 @@ int main(int argc, char *argv[]) {
 
 	// Получение пути
 	char progpath[2048];
-	ssize_t len = readlink("/proc/self/exe", progpath, sizeof(progpath) - 1);
-	if (len == -1) {
-		const char msg[] = "Failed to read /proc/self/exe\n";
+	uint32_t size = sizeof(progpath);
+	if (_NSGetExecutablePath(progpath, &size) != 0) {
+		const char msg[] = "Failed to get executable path\n";
 		write(STDERR_FILENO, msg, sizeof(msg));
 		exit(EXIT_FAILURE);
 	}
-	while (progpath[len] != '/')
+	ssize_t len = strlen(progpath);
+	while (progpath[len] != '/'){
 		--len;
+	}
 	progpath[len] = '\0';
 
 	// Создание pipe

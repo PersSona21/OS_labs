@@ -1,3 +1,3 @@
 all:
-	gcc -o parent parent.c
-	gcc -o child child.c
+	clang -o parent parent.c
+	clang -o child child.c
