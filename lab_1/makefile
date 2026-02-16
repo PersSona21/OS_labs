@@ -15,5 +15,4 @@ clean:
 	rm -rf *.dSYM
 
 run:
-	touch out.txt
-	./parent out.txt
+	./parent
